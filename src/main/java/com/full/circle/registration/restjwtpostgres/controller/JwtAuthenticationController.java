@@ -2,6 +2,7 @@ package com.full.circle.registration.restjwtpostgres.controller;
 
 import com.full.circle.registration.restjwtpostgres.config.JwtTokenUtil;
 import com.full.circle.registration.restjwtpostgres.config.JwtUserDetailsService;
+import com.full.circle.registration.restjwtpostgres.dto.UserDTO;
 import com.full.circle.registration.restjwtpostgres.model.JwtRequest;
 import com.full.circle.registration.restjwtpostgres.model.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,18 +24,25 @@ import org.springframework.web.bind.annotation.RestController;
 public class JwtAuthenticationController {
     @Autowired
     private AuthenticationManager authenticationManager;
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+
     @Autowired
     private JwtUserDetailsService userDetailsService;
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
-    public ResponseEntity<?> createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+    public ResponseEntity createAuthenticationToken(@RequestBody JwtRequest authenticationRequest) throws Exception {
+
         authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-        final UserDetails userDetails = userDetailsService
-                .loadUserByUsername(authenticationRequest.getUsername());
+        final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getUsername());
         final String token = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new JwtResponse(token));
+    }
+
+    @RequestMapping(value = "/register", method = RequestMethod.POST)
+    public ResponseEntity saveUser(@RequestBody UserDTO user) throws Exception {
+        return ResponseEntity.ok(userDetailsService.save(user));
     }
 
     private void authenticate(String username, String password) throws Exception {

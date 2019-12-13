@@ -1,4 +1,5 @@
-Add ENV
+Need will add ENV to docker or another config
+
 export DRIVER_DB=org.postgresql.Driver;
 export URL=jdbc:postgresql://localhost:5432/security
 export USERNAME=postgres

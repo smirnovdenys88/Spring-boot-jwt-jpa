@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletRequest;
 public class HomeController {
 
     @GetMapping
-    public ResponseEntity hello(HttpServletRequest request) {
-        return new ResponseEntity("Hello" + request.toString(), HttpStatus.OK);
+    public ResponseEntity hello() {
+        return new ResponseEntity("Hello JWT", HttpStatus.OK);
     }
 }
