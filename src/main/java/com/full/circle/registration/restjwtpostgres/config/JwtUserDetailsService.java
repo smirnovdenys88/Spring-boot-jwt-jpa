@@ -4,7 +4,6 @@ import com.full.circle.registration.restjwtpostgres.dao.UserDao;
 import com.full.circle.registration.restjwtpostgres.dto.UserDTO;
 import com.full.circle.registration.restjwtpostgres.model.DAOUser;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
