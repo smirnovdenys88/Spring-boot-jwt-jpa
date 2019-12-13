@@ -1,0 +1,5 @@
+Add ENV
+export DRIVER_DB=org.postgresql.Driver;
+export URL=jdbc:postgresql://localhost:5432/security
+export USERNAME=postgres
+export PASW=masterkey

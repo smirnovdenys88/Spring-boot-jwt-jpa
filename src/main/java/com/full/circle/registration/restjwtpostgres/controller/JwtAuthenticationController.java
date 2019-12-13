@@ -1,9 +1,9 @@
 package com.full.circle.registration.restjwtpostgres.controller;
 
-import com.security.jwt.config.JwtTokenUtil;
-import com.security.jwt.config.JwtUserDetailsService;
-import com.security.jwt.model.JwtRequest;
-import com.security.jwt.model.JwtResponse;
+import com.full.circle.registration.restjwtpostgres.config.JwtTokenUtil;
+import com.full.circle.registration.restjwtpostgres.config.JwtUserDetailsService;
+import com.full.circle.registration.restjwtpostgres.model.JwtRequest;
+import com.full.circle.registration.restjwtpostgres.model.JwtResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
