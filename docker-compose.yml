@@ -3,10 +3,10 @@ services:
   app:
     image: app
     build: .
-    container_name: backend
+    container_name: rest_backend
     ports:
       - "8080:8080"
-      - "5005:5005"
+      - "5005:5003"
     restart: always
     depends_on:
       - postgres
@@ -16,7 +16,7 @@ services:
   # Database Service (postgres)
   postgres:
     image: "postgres:10.7"
-    container_name: soapbox-postgres
+    container_name: container-postgres
     restart: always
     ports:
       - "5432:5432"

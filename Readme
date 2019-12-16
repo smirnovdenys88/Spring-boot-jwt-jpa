@@ -1,15 +1,19 @@
 https://www.javainuse.com/spring/boot-jwt-jpa
 
-Need will add ENV to docker or another config
-
+Need will add ENV to docker or another config:
 export DRIVER_DB=org.postgresql.Driver;
 export URL=jdbc:postgresql://localhost:5432/security
 export USERNAME=postgres
 export PASW=masterkey
 
-Docker in file start.sh we create db_name, host, port, user, password
+Docker:
+In file start.sh we create db_name, host, port, user, password
 
+Test:
 Postman or another:
 localhost:8080/authentication/authenticate
 localhost:8080/authentication/register
 localhost:8080/home
+
+Swagger:
+http://localhost:8080/swagger-ui.html
