@@ -1,19 +1,19 @@
 package com.full.circle.registration.restjwtpostgres.dto;
 
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Objects;
 
 public class UserDTO {
-    @Min(value = 6, message = "Please write at least 6 character a username")
+    @Size(min = 4, message = "Please write at least 4 character a username")
     private String username;
 
     @Email(regexp = "[^@]+@[^\\.]+\\..+", message = "Wrong format email")
     @NotNull(message = "Email should be valid")
     private String email;
 
-    @Min(value = 6, message = "Please write at least 6 character a password")
+    @Size(min = 6, message = "Please write at least 6 character a password")
     private String password;
 
     public String getUsername() {
