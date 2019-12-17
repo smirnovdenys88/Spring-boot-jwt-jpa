@@ -5,6 +5,7 @@ import com.full.circle.registration.restjwtpostgres.dto.UserDTO;
 import com.full.circle.registration.restjwtpostgres.service.AuthenticationService;
 import com.full.circle.registration.restjwtpostgres.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -44,5 +45,10 @@ public class AuthenticationController {
     @GetMapping(path = "/register/confirm/{token}")
     public RedirectView confirmEmail(@PathVariable("token") String token) {
         return authenticationService.confirmEmail(token);
+    }
+
+    @GetMapping(path = "/register/reset/pass/")
+    public ResponseEntity resetPassword(@PathVariable("token") UserDTO userDTO, String newPass) {
+        return authenticationService.resetPassword(userDTO, newPass);
     }
 }

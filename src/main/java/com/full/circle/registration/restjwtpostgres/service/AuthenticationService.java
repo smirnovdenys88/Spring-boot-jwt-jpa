@@ -10,4 +10,6 @@ public interface AuthenticationService {
     ResponseEntity signUp(UserDTO userDTO);
 
     RedirectView confirmEmail(String token);
+
+    ResponseEntity resetPassword(UserDTO userDTO, String newPass);
 }

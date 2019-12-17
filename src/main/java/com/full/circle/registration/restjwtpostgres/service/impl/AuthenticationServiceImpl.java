@@ -136,7 +136,18 @@ public class AuthenticationServiceImpl implements UserDetailsService, Authentica
         }
     }
 
-    private boolean checkPass(String plainPassword, String hashedPassword) {
+    @Override
+    public ResponseEntity resetPassword(UserDTO userDTO, String newPass) {
+        Optional<User> user = Optional.ofNullable(userRepository.findByEmail(userDTO.getEmail()));
+        if (user.isPresent() && checkPass(userDTO.getPassword(), user.get().getPassword())){
+            user.get().changePassword(bcryptEncoder.encode(newPass));
+            userRepository.save(user.get());
+            return new ResponseEntity(userDTO, HttpStatus.OK);
+        }
+        return new ResponseEntity("password is not correct", HttpStatus.NOT_FOUND);
+    }
+
+    private synchronized boolean checkPass(String plainPassword, String hashedPassword) {
         return BCrypt.checkpw(plainPassword, hashedPassword);
     }
 }

@@ -81,6 +81,10 @@ public class User {
         return password;
     }
 
+    public void changePassword(String password){
+        this.password = password;
+    }
+
     public static class Builder {
 
         private long id;
