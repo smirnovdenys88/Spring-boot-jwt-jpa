@@ -16,13 +16,13 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-    @Column
+
     private String userName;
-    @Column
     private String email;
-    @Column
+
+    private String tokenConfirmEmail;
     private boolean confirmEmail;
-    @Column
+
     @JsonIgnore
     private String password;
 
@@ -30,9 +30,10 @@ public class User {
         //serialization
     }
 
-    public User(String userName, String email, String password) {
+    public User(String userName, String email, String token, String password) {
         this.userName = userName;
         this.email = email;
+        this.tokenConfirmEmail = token;
         this.password = password;
     }
 
@@ -60,6 +61,14 @@ public class User {
         this.email = email;
     }
 
+    public String getTokenConfirmEmail() {
+        return tokenConfirmEmail;
+    }
+
+    public void setTokenConfirmEmail(String tokenConfirmEmail) {
+        this.tokenConfirmEmail = tokenConfirmEmail;
+    }
+
     public boolean isConfirmEmail() {
         return confirmEmail;
     }
@@ -77,6 +86,7 @@ public class User {
         private long id;
         private String userName;
         private String email;
+        private String token;
         private String pass;
 
         public Builder setId(long id) {
@@ -94,13 +104,18 @@ public class User {
             return this;
         }
 
+        public Builder setToken(String token){
+            this.token = token;
+            return this;
+        }
+
         public Builder setPass(String pass) {
             this.pass = pass;
             return this;
         }
 
         public User build() {
-            return new User(userName, email, pass);
+            return new User(userName, email, token, pass);
         }
     }
 }

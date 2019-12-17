@@ -1,11 +1,13 @@
 package com.full.circle.registration.restjwtpostgres.service.impl;
 
+import com.full.circle.registration.restjwtpostgres.components.SenderNotification;
 import com.full.circle.registration.restjwtpostgres.config.JwtTokenUtil;
 import com.full.circle.registration.restjwtpostgres.dto.UserDTO;
 import com.full.circle.registration.restjwtpostgres.model.AuthToken;
 import com.full.circle.registration.restjwtpostgres.model.User;
 import com.full.circle.registration.restjwtpostgres.repository.UserRepository;
 import com.full.circle.registration.restjwtpostgres.service.AuthenticationService;
+import com.full.circle.registration.restjwtpostgres.utils.Constants;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,9 +18,14 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.mail.MessagingException;
+import javax.validation.constraints.NotNull;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class AuthenticationServiceImpl implements UserDetailsService, AuthenticationService {
@@ -29,6 +36,10 @@ public class AuthenticationServiceImpl implements UserDetailsService, Authentica
     private PasswordEncoder bcryptEncoder;
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
+    @Autowired
+    private SenderNotification senderNotification;
+    @Autowired
+    private Constants constants;
 
 
     @Override
@@ -89,13 +100,40 @@ public class AuthenticationServiceImpl implements UserDetailsService, Authentica
             return new ResponseEntity(message, HttpStatus.FORBIDDEN);
         }
 
+        String token = UUID.randomUUID().toString();
+        String subject = "Registration Confirmation";
+        String confirmationUrl = "Follow the link to verify your email " + constants.baseURL + "/" + constants.pathConfirmEmail + token;
+
+        try {
+            senderNotification.sendMail(constants.EMAIL_USER, constants.EMAIL_PASS,
+                    constants.EMAIL_HOST, constants.EMAIL_PORT,
+                    new String[]{userDTO.getEmail()}, subject, confirmationUrl);
+        } catch (MessagingException e) {
+            new ResponseEntity(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
         User newUser = new User.Builder()
                 .setEmail(userDTO.getEmail())
                 .setUserName(userDTO.getUsername())
+                .setToken(token)
                 .setPass(bcryptEncoder.encode(userDTO.getPassword()))
                 .build();
 
-        return new ResponseEntity(userRepository.save(newUser), HttpStatus.OK);
+        userRepository.save(newUser);
+        return new ResponseEntity(userDTO, HttpStatus.OK);
+    }
+
+    @Override
+    public RedirectView confirmEmail(@NotNull String token) {
+        Optional<User> optional = userRepository.findByTokenConfirmEmail(token);
+        if (optional.isPresent()) {
+            optional.get().setConfirmEmail(true);
+            optional.get().setTokenConfirmEmail("");
+            userRepository.save(optional.get());
+            return new RedirectView(constants.URL_SIGN_IN_PAGE);
+        } else {
+            return new RedirectView();
+        }
     }
 
     private boolean checkPass(String plainPassword, String hashedPassword) {
