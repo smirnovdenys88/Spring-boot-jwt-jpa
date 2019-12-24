@@ -1,6 +1,8 @@
 package com.full.circle.registration.restjwtpostgres.config;
 
 import com.full.circle.registration.restjwtpostgres.utils.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -18,6 +20,8 @@ import java.util.List;
 @Component
 public class CORSFilte implements javax.servlet.Filter{
 
+    private static Logger logger = LoggerFactory.getLogger(CORSFilte.class);
+
     @Autowired
     Constants constants;
 
@@ -27,6 +31,8 @@ public class CORSFilte implements javax.servlet.Filter{
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         String origin = request.getHeader("Origin") == null ? "*" : request.getHeader("Origin");
+
+        logger.info(String.format("Cors filter Origin: %s", origin));
 
         List<String> domains = new ArrayList<>();
         if(constants != null){

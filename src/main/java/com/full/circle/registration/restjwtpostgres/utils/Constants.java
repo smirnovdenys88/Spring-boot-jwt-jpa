@@ -14,8 +14,8 @@ public class Constants {
     public static final String TOKEN_PREFIX = "Bearer ";
     public static final String HEADER_STRING = "Authorization";
 
-    public static final String EMAIL_USER = "dsmirnov@s-pro.io";
-    public static final String EMAIL_PASS = "spronarada";
+    public static final String EMAIL_USER = "**********";
+    public static final String EMAIL_PASS = "**********";
     public static final String EMAIL_HOST = "smtp.gmail.com";
     public static final String EMAIL_PORT = "587";
 

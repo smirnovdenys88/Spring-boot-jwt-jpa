@@ -6,7 +6,7 @@ services:
     container_name: rest_backend
     ports:
       - "8080:8080"
-      - "5005:5003"
+      - "5005:5005"
     restart: always
     depends_on:
       - postgres

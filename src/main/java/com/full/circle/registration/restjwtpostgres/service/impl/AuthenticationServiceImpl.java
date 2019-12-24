@@ -8,6 +8,8 @@ import com.full.circle.registration.restjwtpostgres.model.User;
 import com.full.circle.registration.restjwtpostgres.repository.UserRepository;
 import com.full.circle.registration.restjwtpostgres.service.AuthenticationService;
 import com.full.circle.registration.restjwtpostgres.utils.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +31,7 @@ import java.util.UUID;
 
 @Service
 public class AuthenticationServiceImpl implements UserDetailsService, AuthenticationService {
+    private static Logger logger = LoggerFactory.getLogger(AuthenticationServiceImpl.class);
 
     @Autowired
     private UserRepository userRepository;
@@ -58,6 +61,7 @@ public class AuthenticationServiceImpl implements UserDetailsService, Authentica
     @Override
     public ResponseEntity singIn(UserDTO userDTO) {
         try {
+            logger.info("Sing in user" + userDTO.getEmail());
             User user = userRepository.findByEmail(userDTO.getEmail());
             if (user != null && user.isConfirmEmail() && checkPass(userDTO.getPassword(), user.getPassword())) {
                 return ResponseEntity.ok(new AuthToken(jwtTokenUtil.generateToken(user), user.getUserName()));
@@ -70,8 +74,9 @@ public class AuthenticationServiceImpl implements UserDetailsService, Authentica
 
     @Override
     public ResponseEntity signUp(UserDTO userDTO) {
-        List<User> daoUsers = userRepository.findByEmailIgnoreCaseOrUserNameIgnoreCase(userDTO.getEmail(), userDTO.getUsername());
+        logger.info("Sing up user" + userDTO.getEmail());
 
+        List<User> daoUsers = userRepository.findByEmailIgnoreCaseOrUserNameIgnoreCase(userDTO.getEmail(), userDTO.getUsername());
         if (!daoUsers.isEmpty()) {
             String message = "";
             String fullCoincidence = "Email and Username are already registered";

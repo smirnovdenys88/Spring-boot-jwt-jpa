@@ -122,4 +122,13 @@ public class User {
             return new User(userName, email, token, pass);
         }
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userName='" + userName + '\'' +
+                ", email='" + email + '\'' +
+                '}';
+    }
 }

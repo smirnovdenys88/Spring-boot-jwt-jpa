@@ -1,6 +1,8 @@
 package com.full.circle.registration.restjwtpostgres.components.provider;
 
 import com.full.circle.registration.restjwtpostgres.components.SenderNotification;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 import javax.mail.Message;
@@ -13,6 +15,8 @@ import java.util.Properties;
 
 @Component
 public class SenderMail implements SenderNotification {
+
+    private static Logger logger = LoggerFactory.getLogger(SenderMail.class);
 
     @Override
     public void sendMail(String from, String pass, String host, String port, String[] to, String subject, String body)
