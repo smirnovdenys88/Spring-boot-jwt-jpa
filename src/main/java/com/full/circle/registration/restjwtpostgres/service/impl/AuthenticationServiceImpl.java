@@ -8,6 +8,7 @@ import com.full.circle.registration.restjwtpostgres.model.User;
 import com.full.circle.registration.restjwtpostgres.repository.UserRepository;
 import com.full.circle.registration.restjwtpostgres.service.AuthenticationService;
 import com.full.circle.registration.restjwtpostgres.utils.Constants;
+import org.hibernate.validator.internal.util.stereotypes.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
