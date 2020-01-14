@@ -1,14 +1,13 @@
 package com.full.circle.registration.restjwtpostgres.service.impl;
 
 import com.full.circle.registration.restjwtpostgres.components.SenderNotification;
-import com.full.circle.registration.restjwtpostgres.config.JwtTokenUtil;
+import com.full.circle.registration.restjwtpostgres.config.jwt.JwtTokenUtil;
 import com.full.circle.registration.restjwtpostgres.dto.UserDTO;
 import com.full.circle.registration.restjwtpostgres.model.AuthToken;
 import com.full.circle.registration.restjwtpostgres.model.User;
 import com.full.circle.registration.restjwtpostgres.repository.UserRepository;
 import com.full.circle.registration.restjwtpostgres.service.AuthenticationService;
 import com.full.circle.registration.restjwtpostgres.utils.Constants;
-import org.hibernate.validator.internal.util.stereotypes.ThreadSafe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

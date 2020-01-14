@@ -1,8 +1,11 @@
 package com.full.circle.registration.restjwtpostgres.config;
 
+import com.full.circle.registration.restjwtpostgres.config.jwt.JwtAuthenticationEntryPoint;
+import com.full.circle.registration.restjwtpostgres.config.jwt.JwtRequestFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -48,22 +51,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity.csrf().disable()
-                .authorizeRequests()
+        httpSecurity
+                .cors()
+              .and()
+                .csrf().disable()
+              .authorizeRequests()
+                .antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                 .antMatchers("/v2/api-docs",
                         "/configuration/ui",
                         "/swagger-resources/**",
                         "/configuration/security",
                         "/swagger-ui.html",
-                        "/webjars/**")
+                        "/webjars/**").permitAll()
+                .antMatchers("/authentication/signin",
+                        "/authentication/register",
+                        "/authentication/register/confirm/{token}")
                 .permitAll()
-                .antMatchers("/authentication/authenticate", "/authentication/register", "/authentication/register/confirm/{token}")
-                .permitAll()
-                .anyRequest()
+               .anyRequest()
                 .authenticated()
-                .and()
+              .and()
                 .exceptionHandling().authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .and().sessionManagement()
+               .and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         // Add a filter to validate the tokens with every request
         httpSecurity.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

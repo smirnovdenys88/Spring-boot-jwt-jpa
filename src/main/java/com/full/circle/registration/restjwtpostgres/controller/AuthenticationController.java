@@ -29,7 +29,7 @@ public class AuthenticationController {
     @Autowired
     private Constants constants;
 
-    @PostMapping("/authenticate")
+    @PostMapping("/signin")
     public ResponseEntity singIn(@Valid @RequestBody UserDTO userDTO) {
         return authenticationService.singIn(userDTO);
     }

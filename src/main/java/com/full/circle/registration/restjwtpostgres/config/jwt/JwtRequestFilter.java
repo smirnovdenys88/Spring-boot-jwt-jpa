@@ -1,5 +1,6 @@
-package com.full.circle.registration.restjwtpostgres.config;
+package com.full.circle.registration.restjwtpostgres.config.jwt;
 
+import com.full.circle.registration.restjwtpostgres.config.jwt.JwtTokenUtil;
 import com.full.circle.registration.restjwtpostgres.utils.Constants;
 import io.jsonwebtoken.ExpiredJwtException;
 import org.slf4j.Logger;
@@ -21,7 +22,7 @@ import java.io.IOException;
 
 @Component
 public class JwtRequestFilter extends OncePerRequestFilter {
-    private static Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
+//    private static Logger logger = LoggerFactory.getLogger(JwtRequestFilter.class);
 
     @Autowired
     private UserDetailsService userDetailsService;

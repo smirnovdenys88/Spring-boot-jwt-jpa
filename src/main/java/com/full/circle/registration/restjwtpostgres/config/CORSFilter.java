@@ -18,9 +18,9 @@ import java.util.Arrays;
 import java.util.List;
 
 @Component
-public class CORSFilte implements javax.servlet.Filter{
+public class CORSFilter implements javax.servlet.Filter{
 
-    private static Logger logger = LoggerFactory.getLogger(CORSFilte.class);
+    private static Logger logger = LoggerFactory.getLogger(CORSFilter.class);
 
     @Autowired
     Constants constants;
@@ -39,7 +39,7 @@ public class CORSFilte implements javax.servlet.Filter{
             domains.add(constants.urlWebsocket);
             domains.add(constants.urlFront);
         }
-        List<String> allowedOrigins = new ArrayList<>(Arrays.asList("http://localhost:3000"));
+        List<String> allowedOrigins = new ArrayList<>(Arrays.asList("http://localhost:3000", "http://localhost:4222"));
         allowedOrigins.addAll(domains);
 
         response.setHeader("Access-Control-Allow-Origin", allowedOrigins.contains(origin) ? origin : "");

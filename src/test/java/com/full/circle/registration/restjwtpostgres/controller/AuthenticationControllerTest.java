@@ -1,7 +1,7 @@
 package com.full.circle.registration.restjwtpostgres.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.full.circle.registration.restjwtpostgres.config.CORSFilte;
+import com.full.circle.registration.restjwtpostgres.config.CORSFilter;
 import com.full.circle.registration.restjwtpostgres.dto.UserDTO;
 import com.full.circle.registration.restjwtpostgres.service.AuthenticationService;
 import org.junit.jupiter.api.Test;
@@ -36,7 +36,7 @@ class AuthenticationControllerTest {
     public void startService() throws Exception {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders.standaloneSetup(controller)
-                .addFilters(new CORSFilte())
+                .addFilters(new CORSFilter())
                 .build();
     }
 

@@ -1,4 +1,4 @@
-package com.full.circle.registration.restjwtpostgres.config;
+package com.full.circle.registration.restjwtpostgres.config.jwt;
 
 import com.full.circle.registration.restjwtpostgres.model.User;
 import com.full.circle.registration.restjwtpostgres.utils.Constants;
